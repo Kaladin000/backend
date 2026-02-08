@@ -1,0 +1,40 @@
+services:
+
+  mysql-dev:
+    image: mysql:8.0.35-debian
+    container_name: backend-mysql-dev
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: films
+      MYSQL_USER: userfilms
+      MYSQL_PASSWORD: user
+
+    volumes:
+      - mysql_data_dev:/var/lib/mysql
+      - ./docker/mysql/films_dump.sql:/docker-entrypoint-initdb.d/films_dump.sql
+
+    ports:
+      - "3306:3306"
+
+
+  apache-dev:
+    build: ./docker/apache
+    container_name: backend-apache-dev
+    restart: unless-stopped
+
+    ports:
+      - "8080:80"
+
+    volumes:
+      - ./app:/var/www/html
+      - ./logs:/var/log/apache2/custom
+      - ./docker/apache/vhost-dev.conf:/etc/apache2/sites-available/000-default.conf
+
+    depends_on:
+      - mysql-dev
+
+
+volumes:
+  mysql_data_dev:
