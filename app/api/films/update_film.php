@@ -1,6 +1,6 @@
 <?php
-require_once "../../utils/utils.php";
-require_once "../db/db.php";
+require_once __DIR__ . '/../../utils/utils.php';
+require_once __DIR__ . '/../db/db.php';
 
 try {
 	if ($_SERVER["REQUEST_METHOD"] == "PUT") {
