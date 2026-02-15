@@ -1,0 +1,4 @@
+ip: mysql-prod
+dbname: films
+user: userfilms
+pass: user
