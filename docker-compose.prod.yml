@@ -5,11 +5,14 @@ services:
     container_name: backend-mysql-prod
     restart: always
 
+    command: --ssl=0 --skip-ssl
+
     env_file:
       - .env
 
     volumes:
       - mysql_data_prod:/var/lib/mysql
+      - ./docker/mysql/films_dump.sql:/docker-entrypoint-initdb.d/films_dump.sql
 
     ports:
       - "3306:3306"
